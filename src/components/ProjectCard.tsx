@@ -3,7 +3,7 @@ import type { Project } from "../types";
 import { useState } from "react";
 
 import { Loader2Icon } from "lucide-react";
-import { div, p } from "framer-motion/client";
+
 
 const ProjectCard = ({
   gen,
