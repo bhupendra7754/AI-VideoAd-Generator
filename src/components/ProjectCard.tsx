@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import type { Project } from "../types";
 import { useState } from "react";
-import { div, span } from "framer-motion/client";
+
 import { Loader2Icon } from "lucide-react";
+import { div, p } from "framer-motion/client";
 
 const ProjectCard = ({
   gen,
@@ -75,8 +76,45 @@ const ProjectCard = ({
             className="w-16 h-16 object-cover rounded-full animate-float
             -ml-8 " style={{animationDelay: '3s'}}/>
           </div>
-        </div>
+        </div >
         {/* details */}
+        <div className="p-4">
+
+          {/* product name, date,  aspectRatio */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1">
+              <h3 className="font-medium text-lg mb-1">{gen.productName}</h3>
+              <p className="text-sm text-gray-400">Created: {new Date(gen.createdAt).toLocaleString()}</p>
+              {gen.updatedAt && (
+                <p className="text-xs text-gray-500 mt-1">Updated: {new Date(gen.updatedAt).toLocaleString()}</p>
+              )}
+            </div>
+            <div className="text-right">
+              <div className="mt-2 flex flex-col items-end gap-1">
+                <span className="text-xs px-2 py-1 bg-white/5 rounded-full">Aspect:{gen.aspectRatio}</span>
+              </div>
+            </div>
+          </div>
+          {/* product description if available */}
+          {gen.productDescription && (
+            <div className="mt-3">
+              <p className="text-xs text-gray-400 mb-1">Description</p>
+              <div className="text-sm text-gray-300 bg-white/3 p-2 rounded-md
+              wrap-break-word">{gen.productDescription}</div>
+            </div>
+          )}
+
+          {/* user promt */}
+           {gen.userPrompt && (
+            <div className="mt-3">
+              
+              <div className="text-sm text-gray-300
+              ">{gen.userPrompt}</div>
+            </div>
+          )}
+
+          </div>
+
       </div>
     </div>
   );
