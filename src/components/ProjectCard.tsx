@@ -90,7 +90,7 @@ const ProjectCard = ({
           </div>
 
           {/* action menu for my generations only  */}
-          {!ForCommunity && (
+          {ForCommunity && (
             <div
               className="absolute right-3 top-3 sm:opacity-0 group-hover:opacity-100
             transition flex items-center gap-2"
@@ -248,7 +248,7 @@ const ProjectCard = ({
           )}
 
           {/* buttons */}
-          {!ForCommunity && (
+          {ForCommunity && (
             
             <div className="mt-4 grid grid-cols-2 gap-3">
               <GhostButton className="text-xs justify-center"
