@@ -1,88 +1,4 @@
-// import { Request, Response } from "express";
-// import { verifyWebhook } from "@clerk/express/webhooks";
-// import { prisma } from "../configs/prisma.js";
-
-
-
-// const clerkWebhooks = async (req: Request, res: Response) => {
-//   try {
-//     const evt: any = await verifyWebhook(req);
-//     // get data from req
-//     const {data ,type} =evt;
-
-//     // switch case for type of event
-//     switch (type){
-//         case "user.created":{
-//             await prisma.user.create({
-//                 data:{
-//                     id: data.id,
-//                     email: data?email_email_addresses[0]?.email_adresses,
-//                     name: data?.first_name + " " + data?.last_name,
-//                     image: data?.image_url,
-//                 }
-//             });
-//              break;
-//         }
-//          case "user.updated":{
-//             await prisma.user.update({
-//                 where:{
-//                     id: data.id
-//                 },
-//                 data:{
-                   
-//                     email: data?email_email_addresses[0]?.email_adresses,
-//                     name: data?.first_name + " " + data?.last_name,
-//                     image: data?.image_url,
-//                 }
-//             });
-//              break;
-//         }
-//          case "user.deleted":{
-//             await prisma.user.delete({
-//                 where:{
-//                     id: data.id
-
-//                 }
-//             });
-//              break;
-//         }
-
-//          case "paymentAttempt.updated":{
-//             if((data.charge_type==="recurring" || data.charge_type==="checkout") &&
-//         data.status ==="paid"){
-//             const creadits ={pro: 80, premium: 240,}
-//             const clerkUserId =data?.prayer?.user_id;
-//             const planId: keyof typeof creadits = data?.subscriptions_item?.[0]?.plan?.slug;
-//             if{planId!=="pro" && planId !== "premium"}{
-//                 return res.status(400).json({message:"Invalid plan id"});
-//             }
-//             console.log(planId);
-//             await prisma.user.update({
-//                 where:{id: clerkUserId,},
-//                 data:{
-//                     credits: {increment: creadits[planId]}
-//                 }
-//             })
-//         }
-//              break;
-//         }
-//         default:
-//             break;
-
-
-
-
-//     }
-//     res.json({message:"Webhook received: " +type});
-
-//   } catch (error:any) {
-//     res.status(500).json({message: error.message});
-//   }
-// };
-
-// export default clerkWebhooks;
-
-
+import * as Sentry from "@sentry/node";
 import { Request, Response } from "express";
 import { verifyWebhook } from "@clerk/express/webhooks";
 import { prisma } from "../configs/prisma.js";
@@ -172,6 +88,7 @@ const clerkWebhooks = async (req: Request, res: Response) => {
     res.json({ message: "Webhook received: " + type });
 
   } catch (error: any) {
+    Sentry.captureException(error);
     res.status(500).json({ message: error.message });
   }
 };

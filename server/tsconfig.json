@@ -12,7 +12,7 @@
     },
     "include": [
         "./**/*.ts"
-    ],
+, "configs/instrument.mjs"    ],
     "exclude": [
         "node_modules"
     ]
